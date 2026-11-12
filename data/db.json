@@ -3,216 +3,35 @@
     {
       "_id": "user-admin-001",
       "username": "admin",
-      "email": "admin@moonudhyog.com",
+      "email": "admin@hisabkitab.local",
       "fullName": "Super Admin",
       "password": "$2b$10$5D9eSg.96oqK48loP1NqpOmNAWLPBDlJp.p37.XfaPwDB56o521IC",
       "role": "superadmin",
       "is2FAEnabled": false,
       "status": "active",
-      "createdAt": "2026-11-11T09:24:58.570Z",
-      "lastLogin": "2026-11-11T09:34:09.878Z"
+      "createdAt": "2026-11-11T09:24:58.570Z"
     }
   ],
-  "customers": [
-    {
-      "_id": "cust-id-101",
-      "syncId": "cust-uuid-101",
-      "name": "Ramesh Kumar & Sons",
-      "phone": "+91 98100 12345",
-      "email": "ramesh.kumar@gmail.com",
-      "address": "Shop 14, Sadar Bazar, Delhi",
-      "gstin": "07ABCPR1234E1Z1",
-      "openingBalance": 12500,
-      "currentBalance": 18900,
-      "notes": "Regular box customer",
-      "isActive": true,
-      "updatedAt": "2026-11-11T09:24:58.570Z"
-    },
-    {
-      "_id": "cust-id-102",
-      "syncId": "cust-uuid-102",
-      "name": "Gupta Traders & Suppliers",
-      "phone": "+91 98100 54321",
-      "email": "guptatraders@yahoo.com",
-      "address": "B-24, Gandhi Nagar, Delhi",
-      "gstin": "07BCDEG5678F1Z8",
-      "openingBalance": 5000,
-      "currentBalance": 9800,
-      "notes": "Prompt payer",
-      "isActive": true,
-      "updatedAt": "2026-11-11T09:24:58.570Z"
-    }
-  ],
-  "vendors": [
-    {
-      "_id": "vend-id-201",
-      "syncId": "vend-uuid-201",
-      "name": "Aggarwal Paper & Board Mills",
-      "phone": "+91 98711 22334",
-      "email": "sales@aggarwalmills.com",
-      "address": "Site-4 Industrial Area, Sahibabad, Ghaziabad",
-      "gstin": "09AAACA4321A1Z9",
-      "openingBalance": 24000,
-      "currentBalance": 42000,
-      "notes": "Raw kraft paper supplier",
-      "isActive": true,
-      "updatedAt": "2026-11-11T09:24:58.570Z"
-    }
-  ],
-  "transactions": [
-    {
-      "_id": "tx-id-001",
-      "syncId": "tx-uuid-001",
-      "partyType": "customer",
-      "partySyncId": "cust-uuid-101",
-      "partyName": "Ramesh Kumar & Sons",
-      "partyPhone": "+91 98100 12345",
-      "date": "2026-11-09",
-      "type": "udhar",
-      "particulars": "Jumbo Box 5-Ply Heavy Duty, BABA 3-Ply Special Cartons",
-      "items": [
-        {
-          "description": "Jumbo Box 5-Ply Heavy Duty",
-          "quantity": 200,
-          "unit": "pcs",
-          "rate": 25,
-          "lineTotal": 5000
-        },
-        {
-          "description": "BABA 3-Ply Special White Box",
-          "quantity": 150,
-          "unit": "pcs",
-          "rate": 16,
-          "lineTotal": 2400
-        }
-      ],
-      "subtotal": 7400,
-      "discount": 0,
-      "tax": 0,
-      "grandTotal": 7400,
-      "paymentMode": "credit",
-      "billNumber": "PARCHI-1001",
-      "notes": "Dispatched via tempo DL-1L-4421",
-      "isSynced": true,
-      "updatedAt": "2026-11-11T09:24:58.571Z"
-    },
-    {
-      "_id": "tx-id-002",
-      "syncId": "tx-uuid-002",
-      "partyType": "customer",
-      "partySyncId": "cust-uuid-101",
-      "partyName": "Ramesh Kumar & Sons",
-      "partyPhone": "+91 98100 12345",
-      "date": "2026-11-10",
-      "type": "jama",
-      "particulars": "UPI Payment received against balance",
-      "items": [],
-      "subtotal": 5000,
-      "discount": 0,
-      "tax": 0,
-      "grandTotal": 5000,
-      "paymentMode": "upi",
-      "billNumber": "",
-      "notes": "Ref: UPI/26111009841",
-      "isSynced": true,
-      "updatedAt": "2026-11-11T09:24:58.571Z"
-    },
-    {
-      "_id": "tx-id-003",
-      "syncId": "tx-uuid-003",
-      "partyType": "customer",
-      "partySyncId": "cust-uuid-102",
-      "partyName": "Gupta Traders & Suppliers",
-      "partyPhone": "+91 98100 54321",
-      "date": "2026-11-11",
-      "type": "udhar",
-      "particulars": "500 pcs Standard Corrugated Shipping Box",
-      "items": [
-        {
-          "description": "500 pcs Standard Corrugated Shipping Box",
-          "quantity": 500,
-          "unit": "pcs",
-          "rate": 12,
-          "lineTotal": 6000
-        },
-        {
-          "description": "Packaging BOPP Tape 2-inch Brown",
-          "quantity": 24,
-          "unit": "rolls",
-          "rate": 50,
-          "lineTotal": 1200
-        }
-      ],
-      "subtotal": 7200,
-      "discount": 200,
-      "tax": 0,
-      "grandTotal": 7000,
-      "paymentMode": "credit",
-      "billNumber": "PARCHI-1002",
-      "notes": "Delivered at shop",
-      "isSynced": true,
-      "updatedAt": "2026-11-11T09:24:58.571Z"
-    }
-  ],
-  "bills": [
-    {
-      "_id": "bill-id-001",
-      "billNumber": "PARCHI-1001",
-      "syncId": "bill-uuid-001",
-      "partyType": "customer",
-      "partySyncId": "cust-uuid-101",
-      "partyName": "Ramesh Kumar & Sons",
-      "partyPhone": "+91 98100 12345",
-      "partyAddress": "Shop 14, Sadar Bazar, Delhi",
-      "partyGstin": "07ABCPR1234E1Z1",
-      "date": "2026-11-09",
-      "items": [
-        {
-          "description": "Jumbo Box 5-Ply Heavy Duty",
-          "quantity": 200,
-          "unit": "pcs",
-          "rate": 25,
-          "lineTotal": 5000
-        },
-        {
-          "description": "BABA 3-Ply Special White Box",
-          "quantity": 150,
-          "unit": "pcs",
-          "rate": 16,
-          "lineTotal": 2400
-        }
-      ],
-      "subtotal": 7400,
-      "discount": 0,
-      "tax": 0,
-      "grandTotal": 7400,
-      "previousBalance": 12500,
-      "totalPayable": 19900,
-      "amountReceived": 1000,
-      "closingBalance": 18900,
-      "paymentMode": "cash",
-      "notes": "Thank you for your business!",
-      "terms": "1. Goods once sold will not be taken back.\n2. Please clear payments within 15 days.",
-      "status": "partial",
-      "updatedAt": "2026-11-11T09:24:58.571Z"
-    }
-  ],
+  "customers": [],
+  "vendors": [],
+  "transactions": [],
+  "bills": [],
   "settings": {
-    "businessName": "Moon Udhyog",
-    "tagline": "Wholesale & Retail Corrugated Boxes & Packaging",
+    "businessName": "",
+    "tagline": "",
     "logoType": "initials",
     "customLogoUrl": "",
     "initialsBgColor": "#1e3a8a",
     "initialsTextColor": "#ffffff",
-    "phone": "+91 98765 43210",
-    "email": "contact@moonudhyog.com",
-    "address": "Plot No. 45, Industrial Area, Phase-1, New Delhi - 110020",
-    "gstin": "07AAAAA1234A1Z5",
-    "upiId": "moonudhyog@okaxis",
+    "phone": "",
+    "email": "",
+    "address": "",
+    "gstin": "",
+    "upiId": "",
     "currencySymbol": "₹",
-    "terms": "1. Goods once sold will not be taken back.\n2. Payment due within 15 days.\n3. Interest @18% p.a. on overdue bills.",
+    "terms": "",
     "require2FA": false,
-    "nextBillNumber": 1004,
-    "updatedAt": "2026-11-11T09:24:56.180Z"
+    "nextBillNumber": 1001,
+    "updatedAt": "2026-11-12T14:35:00.000Z"
   }
 }

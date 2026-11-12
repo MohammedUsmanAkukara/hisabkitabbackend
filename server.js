@@ -24,8 +24,46 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
+app.options('*', cors());
 app.use(express.json({ limit: '15mb' }));
 app.use(express.urlencoded({ extended: true, limit: '15mb' }));
+
+// Ensure MongoDB connection once per cold start (reused across serverless invocations)
+let dbInitPromise = null;
+
+const ensureDatabaseReady = async () => {
+  if (mongoose.connection.readyState === 1) {
+    return true;
+  }
+
+  if (!dbInitPromise) {
+    dbInitPromise = (async () => {
+      console.log('📡 Connecting to MongoDB...');
+      try {
+        await mongoose.connect(MONGODB_URI, {
+          serverSelectionTimeoutMS: 10000,
+          connectTimeoutMS: 10000
+        });
+        console.log('✅ Connected to MongoDB successfully.');
+        await seedDatabase();
+        return true;
+      } catch (dbErr) {
+        console.warn('⚠️ MongoDB unavailable, falling back to local File-Store:', dbErr.message);
+        await dbStore.seed();
+        dbInitPromise = null;
+        return false;
+      }
+    })();
+  }
+
+  return dbInitPromise;
+};
+
+// Wait for DB initialization before handling API requests (critical on serverless)
+app.use('/api', async (req, res, next) => {
+  await ensureDatabaseReady();
+  next();
+});
 
 // Health Check
 app.get('/api/health', (req, res) => {
@@ -56,31 +94,18 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start Server and Database Connection
-const startServer = async () => {
-  try {
-    console.log(`📡 Connecting to MongoDB at ${MONGODB_URI}...`);
-    try {
-      await mongoose.connect(MONGODB_URI, {
-        serverSelectionTimeoutMS: 2000
+if (!process.env.VERCEL) {
+  ensureDatabaseReady()
+    .then(() => {
+      app.listen(PORT, () => {
+        console.log(`🚀 Hisab-Kitab Backend Server running on http://localhost:${PORT}`);
+        console.log(`🔑 Super Admin login: username [admin] | password [admin123]`);
       });
-      console.log('✅ Connected to MongoDB successfully.');
-      await seedDatabase();
-    } catch (dbErr) {
-      console.warn('⚠️ MongoDB not running on 127.0.0.1:27017.');
-      console.log('⚡ Activating built-in JSON file database (backend/data/db.json) for instant operation.');
-      console.log('💡 To connect live MongoDB, update MONGODB_URI in backend/.env');
-      await dbStore.seed();
-    }
-
-    app.listen(PORT, () => {
-      console.log(`🚀 Hisab-Kitab Backend Server running on http://localhost:${PORT}`);
-      console.log(`🔑 Super Admin login: username [admin] | password [admin123]`);
+    })
+    .catch((error) => {
+      console.error('Fatal server startup error:', error);
+      process.exit(1);
     });
-  } catch (error) {
-    console.error('Fatal server startup error:', error);
-    process.exit(1);
-  }
-};
+}
 
-startServer();
+export default app;

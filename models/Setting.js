@@ -3,11 +3,11 @@ import mongoose from 'mongoose';
 const settingSchema = new mongoose.Schema({
   businessName: {
     type: String,
-    default: 'Moon Udhyog'
+    default: ''
   },
   tagline: {
     type: String,
-    default: 'Wholesale & Retail Traders'
+    default: ''
   },
   logoType: {
     type: String,
@@ -20,7 +20,7 @@ const settingSchema = new mongoose.Schema({
   },
   initialsBgColor: {
     type: String,
-    default: '#1e3a8a' // Royal Navy Blue
+    default: '#1e3a8a'
   },
   initialsTextColor: {
     type: String,
@@ -28,23 +28,23 @@ const settingSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    default: '+91 98765 43210'
+    default: ''
   },
   email: {
     type: String,
-    default: 'contact@moonudhyog.com'
+    default: ''
   },
   address: {
     type: String,
-    default: 'Shop No. 12, Grain Market, Delhi - 110006'
+    default: ''
   },
   gstin: {
     type: String,
-    default: '07AAAAA1234A1Z5'
+    default: ''
   },
   upiId: {
     type: String,
-    default: 'moonudhyog@okaxis'
+    default: ''
   },
   currencySymbol: {
     type: String,
@@ -52,7 +52,7 @@ const settingSchema = new mongoose.Schema({
   },
   terms: {
     type: String,
-    default: '1. Goods once sold will not be returned.\n2. Please clear payments within 15 days.'
+    default: ''
   },
   require2FA: {
     type: Boolean,
@@ -69,4 +69,3 @@ const settingSchema = new mongoose.Schema({
 });
 
 export default mongoose.model('Setting', settingSchema);
-

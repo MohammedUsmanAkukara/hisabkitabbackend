@@ -36,14 +36,22 @@ export const pushSyncBatch = async (req, res) => {
     // 3. Sync Transactions
     for (const t of transactions) {
       if (!t.syncId) continue;
-      await TransactionRepo.save(t);
+      if (t.isActive === false) {
+        await TransactionRepo.delete(t.syncId);
+      } else {
+        await TransactionRepo.save(t);
+      }
       results.transactions.push(t.syncId);
     }
 
     // 4. Sync Bills
     for (const b of bills) {
       if (!b.syncId) continue;
-      await BillRepo.save(b);
+      if (b.isActive === false) {
+        await BillRepo.delete(b.syncId);
+      } else {
+        await BillRepo.save(b);
+      }
       results.bills.push(b.syncId);
     }
 
@@ -77,6 +85,8 @@ export const pullSyncData = async (req, res) => {
       return list.filter(item => !item.updatedAt || new Date(item.updatedAt) > sinceDate);
     };
 
+    const cleanSettings = settings?.toObject ? settings.toObject() : settings;
+
     return res.status(200).json({
       success: true,
       serverTime: new Date().toISOString(),
@@ -85,7 +95,7 @@ export const pullSyncData = async (req, res) => {
         vendors: filterSince(allVendors),
         transactions: filterSince(allTransactions),
         bills: filterSince(allBills),
-        settings
+        settings: cleanSettings
       }
     });
   } catch (error) {
