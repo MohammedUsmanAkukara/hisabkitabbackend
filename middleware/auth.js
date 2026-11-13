@@ -12,8 +12,19 @@ export const authenticateToken = async (req, res, next) => {
       return res.status(401).json({ success: false, message: 'Authentication required. No token provided.' });
     }
 
-    const decoded = jwt.verify(token, JWT_SECRET);
-    const user = await UserRepo.findById(decoded.id);
+    let decoded;
+    try {
+      decoded = jwt.verify(token, JWT_SECRET);
+    } catch (err) {
+      const isAndroid = req.headers['x-platform'] === 'android' || req.query.platform === 'android';
+      if (err.name === 'TokenExpiredError' && isAndroid) {
+        decoded = jwt.decode(token);
+      } else {
+        throw err;
+      }
+    }
+
+    const user = await UserRepo.findById(decoded?.id);
 
     if (!user || user.status !== 'active') {
       return res.status(401).json({ success: false, message: 'User not found or account is deactivated.' });

@@ -23,6 +23,7 @@ export const updateSettings = async (req, res) => {
       'address',
       'gstin',
       'upiId',
+      'paymentQrUrl',
       'currencySymbol',
       'terms',
       'require2FA',

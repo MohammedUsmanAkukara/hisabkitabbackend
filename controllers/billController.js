@@ -192,3 +192,24 @@ export const deleteBill = async (req, res) => {
     return res.status(500).json({ success: false, message: 'Failed to delete bill.', error: error.message });
   }
 };
+
+export const updateBill = async (req, res) => {
+  try {
+    const { syncId } = req.params;
+    const existing = await BillRepo.getByNumber(syncId);
+    if (!existing) {
+      return res.status(404).json({ success: false, message: 'Bill not found.' });
+    }
+
+    const updated = await BillRepo.save({
+      ...existing,
+      ...req.body,
+      syncId: existing.syncId || syncId,
+      updatedAt: new Date().toISOString()
+    });
+
+    return res.status(200).json({ success: true, bill: updated });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: 'Failed to update bill.', error: error.message });
+  }
+};

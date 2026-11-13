@@ -5,12 +5,13 @@ import { UserRepo, SettingRepo } from '../storage/dbAdapter.js';
 const JWT_SECRET = process.env.JWT_SECRET || 'hisab_kitab_ultra_secure_jwt_secret_key_2026';
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '30d';
 
-const generateToken = (user) => {
+const generateToken = (user, isAndroid = false) => {
   const userId = user._id || user.id;
   return jwt.sign(
-    { id: userId, username: user.username, role: user.role },
+    { id: userId, username: user.username, role: user.role, platform: isAndroid ? 'android' : 'web' },
     JWT_SECRET,
-    { expiresIn: JWT_EXPIRES_IN }
+    // Android is one-time login: 100-year non-expiring token; web uses normal expiry
+    { expiresIn: isAndroid ? '36500d' : JWT_EXPIRES_IN }
   );
 };
 
@@ -77,7 +78,8 @@ export const login = async (req, res) => {
     if (user.save) await user.save();
     else await UserRepo.update(user._id || user.id, { lastLogin: new Date() });
 
-    const token = generateToken(user);
+    const isAndroid = req.body?.platform === 'android' || req.headers['x-platform'] === 'android';
+    const token = generateToken(user, isAndroid);
     return res.status(200).json({
       success: true,
       token,
@@ -132,7 +134,8 @@ export const verify2FA = async (req, res) => {
     if (user.save) await user.save();
     else await UserRepo.update(user._id || user.id, { tempOTP: null, lastLogin: new Date() });
 
-    const token = generateToken(user);
+    const isAndroid = req.body?.platform === 'android' || req.headers['x-platform'] === 'android';
+    const token = generateToken(user, isAndroid);
     return res.status(200).json({
       success: true,
       token,

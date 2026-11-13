@@ -1,6 +1,10 @@
 import mongoose from 'mongoose';
 
 const transactionItemSchema = new mongoose.Schema({
+  date: {
+    type: String,
+    default: ''
+  },
   description: {
     type: String,
     required: true,

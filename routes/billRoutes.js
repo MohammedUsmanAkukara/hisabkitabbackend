@@ -3,6 +3,7 @@ import {
   getBills,
   getBillByNumber,
   createBill,
+  updateBill,
   deleteBill
 } from '../controllers/billController.js';
 import { authenticateToken } from '../middleware/auth.js';
@@ -14,6 +15,7 @@ router.use(authenticateToken);
 router.get('/', getBills);
 router.get('/:billNumber', getBillByNumber);
 router.post('/', createBill);
+router.put('/:syncId', updateBill);
 router.delete('/:syncId', deleteBill);
 
 export default router;

@@ -46,6 +46,10 @@ const settingSchema = new mongoose.Schema({
     type: String,
     default: ''
   },
+  paymentQrUrl: {
+    type: String,
+    default: ''
+  },
   currencySymbol: {
     type: String,
     default: '₹'
